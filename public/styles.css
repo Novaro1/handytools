@@ -1,0 +1,872 @@
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #008080;
+      font-family: 'MS Sans Serif', 'Microsoft Sans Serif', Tahoma, Arial, sans-serif;
+      font-size: 11px;
+      color: #000000;
+      min-height: 100vh;
+      padding: 16px 0 48px;
+    }
+
+    /* ── Window chrome ─────────────────────────────── */
+    .app-window {
+      width: 820px;
+      margin: 0 auto;
+      background: #C0C0C0;
+      border-top:    2px solid #FFFFFF;
+      border-left:   2px solid #FFFFFF;
+      border-bottom: 2px solid #808080;
+      border-right:  2px solid #808080;
+      outline: 1px solid #000000;
+    }
+
+    .title-bar {
+      background: #000080;
+      padding: 3px 3px 3px 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+    }
+
+    .title-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: #FFFFFF;
+      font-weight: bold;
+      font-size: 11px;
+    }
+
+    .title-icon { font-size: 13px; }
+
+    .title-controls { display: flex; gap: 2px; }
+
+    .wnd-btn {
+      width: 16px;
+      height: 14px;
+      background: #C0C0C0;
+      color: #000000;
+      font-size: 9px;
+      font-weight: bold;
+      border-top:    1px solid #FFFFFF;
+      border-left:   1px solid #FFFFFF;
+      border-bottom: 1px solid #808080;
+      border-right:  1px solid #808080;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'MS Sans Serif', Arial, sans-serif;
+      line-height: 1;
+    }
+
+    .wnd-btn:active {
+      border-top:    1px solid #808080;
+      border-left:   1px solid #808080;
+      border-bottom: 1px solid #FFFFFF;
+      border-right:  1px solid #FFFFFF;
+    }
+
+    /* ── Menu bar ──────────────────────────────────── */
+    .menu-bar {
+      background: #C0C0C0;
+      border-bottom: 1px solid #808080;
+      display: flex;
+      padding: 1px 0;
+    }
+
+    .menu-item {
+      padding: 3px 8px;
+      font-size: 11px;
+      cursor: pointer;
+      color: #000000;
+      text-decoration: none;
+      display: block;
+    }
+
+    .menu-item:hover,
+    .menu-item.active {
+      background: #000080;
+      color: #FFFFFF;
+    }
+
+    .menu-item span.underline { text-decoration: underline; }
+
+    /* ── Toolbar ───────────────────────────────────── */
+    .toolbar {
+      background: #C0C0C0;
+      border-bottom: 1px solid #808080;
+      padding: 3px 6px;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .tb-btn {
+      min-width: 22px;
+      height: 22px;
+      background: #C0C0C0;
+      border-top:    1px solid #FFFFFF;
+      border-left:   1px solid #FFFFFF;
+      border-bottom: 1px solid #808080;
+      border-right:  1px solid #808080;
+      padding: 0 4px;
+      cursor: pointer;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: inherit;
+      color: #000000;
+      gap: 2px;
+    }
+
+    .tb-btn:active {
+      border-top:    1px solid #808080;
+      border-left:   1px solid #808080;
+      border-bottom: 1px solid #FFFFFF;
+      border-right:  1px solid #FFFFFF;
+    }
+
+    .tb-sep {
+      width: 1px;
+      height: 18px;
+      background: #808080;
+      margin: 0 3px;
+      border-right: 1px solid #FFFFFF;
+    }
+
+    .tb-label { font-size: 11px; padding: 0 4px 0 6px; }
+
+    .tb-search {
+      background: #FFFFFF;
+      border-top:    1px solid #808080;
+      border-left:   1px solid #808080;
+      border-bottom: 1px solid #FFFFFF;
+      border-right:  1px solid #FFFFFF;
+      padding: 2px 4px;
+      font-size: 11px;
+      font-family: inherit;
+      color: #000000;
+      width: 160px;
+    }
+
+    .tb-search:focus { outline: none; }
+
+    /* ── Workspace layout ──────────────────────────── */
+    .workspace {
+      display: flex;
+      height: 480px;
+    }
+
+    /* ── Tree sidebar ──────────────────────────────── */
+    .tree-sidebar {
+      width: 170px;
+      flex-shrink: 0;
+      border-top:    2px solid #808080;
+      border-left:   2px solid #808080;
+      border-bottom: 2px solid #FFFFFF;
+      border-right:  2px solid #FFFFFF;
+      margin: 4px 2px 4px 4px;
+      background: #FFFFFF;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .tree-cat {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 4px;
+      cursor: pointer;
+      background: #C0C0C0;
+      border-bottom: 1px solid #808080;
+      font-weight: bold;
+      font-size: 11px;
+      user-select: none;
+    }
+
+    .tree-cat:hover { background: #D0D0D0; }
+
+    .tree-cat .arrow { font-size: 8px; width: 10px; }
+
+    .tree-items { display: block; }
+    .tree-items.collapsed { display: none; }
+
+    .tree-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 4px 2px 18px;
+      cursor: pointer;
+      font-size: 11px;
+      white-space: nowrap;
+      color: #000000;
+      text-decoration: none;
+      border-bottom: 1px solid #E8E8E8;
+    }
+
+    .tree-item:hover {
+      background: #000080;
+      color: #FFFFFF;
+    }
+
+    .tree-item.selected {
+      background: #000080;
+      color: #FFFFFF;
+    }
+
+    .tree-item .ti { font-size: 11px; }
+
+    /* ── Content panel ─────────────────────────────── */
+    .content-panel {
+      flex: 1;
+      border-top:    2px solid #808080;
+      border-left:   2px solid #808080;
+      border-bottom: 2px solid #FFFFFF;
+      border-right:  2px solid #FFFFFF;
+      margin: 4px 4px 4px 2px;
+      background: #C0C0C0;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    /* ── Status bar ────────────────────────────────── */
+    .status-bar {
+      border-top: 1px solid #808080;
+      padding: 2px 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      background: #C0C0C0;
+    }
+
+    .status-cell {
+      border-top:    1px solid #808080;
+      border-left:   1px solid #808080;
+      border-bottom: 1px solid #FFFFFF;
+      border-right:  1px solid #FFFFFF;
+      padding: 1px 8px;
+      min-width: 80px;
+    }
+
+    /* ── Home: Control Panel grid ──────────────────── */
+    #view-home {
+      padding: 8px;
+    }
+
+    .cp-section-label {
+      font-weight: bold;
+      font-size: 11px;
+      padding: 4px 2px 2px;
+      margin-top: 6px;
+      border-bottom: 1px solid #808080;
+      margin-bottom: 4px;
+    }
+
+    .cp-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2px;
+      padding: 2px;
+    }
+
+    .cp-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 72px;
+      padding: 6px 4px;
+      cursor: pointer;
+      text-align: center;
+      gap: 4px;
+    }
+
+    .cp-icon:hover { background: #000080; color: #FFFFFF; }
+    .cp-icon:hover .cp-icon-label { color: #FFFFFF; }
+
+    .cp-icon-img {
+      width: 32px;
+      height: 32px;
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      image-rendering: pixelated;
+    }
+
+    .cp-icon-label {
+      font-size: 11px;
+      color: #000000;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+
+    /* ── Tool panel (dialog style) ─────────────────── */
+    .tool-panel { display: none; padding: 8px 10px; }
+    .tool-panel.active { display: block; }
+
+    .dialog-title {
+      font-weight: bold;
+      font-size: 12px;
+      border-bottom: 1px solid #808080;
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+    }
+
+    /* Group box */
+    .groupbox {
+      border: 1px solid #808080;
+      border-top-color: #808080;
+      margin: 8px 0;
+      padding: 10px 8px 8px;
+      position: relative;
+    }
+
+    .groupbox-title {
+      position: absolute;
+      top: -7px;
+      left: 8px;
+      background: #C0C0C0;
+      padding: 0 4px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    /* Form elements */
+    .form-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 6px;
+      align-items: flex-start;
+    }
+
+    .form-col { flex: 1; }
+
+    .field-label {
+      display: block;
+      font-size: 11px;
+      margin-bottom: 2px;
+      font-weight: bold;
+    }
+
+    textarea,
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    select {
+      background: #FFFFFF;
+      border-top:    2px solid #808080;
+      border-left:   2px solid #808080;
+      border-bottom: 2px solid #DFDFDF;
+      border-right:  2px solid #DFDFDF;
+      padding: 2px 4px;
+      font-size: 11px;
+      font-family: 'MS Sans Serif', 'Microsoft Sans Serif', Tahoma, Arial, sans-serif;
+      color: #000000;
+      width: 100%;
+    }
+
+    textarea {
+      font-family: 'Courier New', 'Courier', monospace;
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    input[type="date"]:focus,
+    select:focus,
+    textarea:focus { outline: 1px dotted #000000; outline-offset: -2px; }
+
+    /* Buttons */
+    .btn {
+      background: #C0C0C0;
+      color: #000000;
+      border-top:    2px solid #FFFFFF;
+      border-left:   2px solid #FFFFFF;
+      border-bottom: 2px solid #808080;
+      border-right:  2px solid #808080;
+      padding: 3px 12px;
+      font-size: 11px;
+      font-family: 'MS Sans Serif', 'Microsoft Sans Serif', Tahoma, Arial, sans-serif;
+      cursor: pointer;
+      min-width: 75px;
+      text-align: center;
+    }
+
+    .btn:active {
+      border-top:    2px solid #808080;
+      border-left:   2px solid #808080;
+      border-bottom: 2px solid #FFFFFF;
+      border-right:  2px solid #FFFFFF;
+      padding: 4px 11px 2px 13px;
+    }
+
+    .btn:focus { outline: 1px dotted #000000; outline-offset: -4px; }
+
+    .btn.default-btn {
+      border-top:    2px solid #FFFFFF;
+      border-left:   2px solid #FFFFFF;
+      border-bottom: 2px solid #808080;
+      border-right:  2px solid #808080;
+      outline: 2px solid #000000;
+      outline-offset: -3px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin: 6px 0;
+      align-items: center;
+    }
+
+    /* Output/display areas */
+    .output-box {
+      background: #FFFFFF;
+      border-top:    2px solid #808080;
+      border-left:   2px solid #808080;
+      border-bottom: 2px solid #DFDFDF;
+      border-right:  2px solid #DFDFDF;
+      padding: 4px;
+      font-family: 'Courier New', 'Courier', monospace;
+      font-size: 11px;
+      min-height: 50px;
+      white-space: pre-wrap;
+      word-break: break-all;
+      position: relative;
+      color: #000000;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      background: #C0C0C0;
+      border-top:    1px solid #FFFFFF;
+      border-left:   1px solid #FFFFFF;
+      border-bottom: 1px solid #808080;
+      border-right:  1px solid #808080;
+      padding: 1px 6px;
+      font-size: 10px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .copy-btn:active {
+      border-top:    1px solid #808080;
+      border-left:   1px solid #808080;
+      border-bottom: 1px solid #FFFFFF;
+      border-right:  1px solid #FFFFFF;
+    }
+
+    /* Stats strip */
+    .stats-row {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .stat-box {
+      background: #FFFFFF;
+      border-top:    1px solid #808080;
+      border-left:   1px solid #808080;
+      border-bottom: 1px solid #DFDFDF;
+      border-right:  1px solid #DFDFDF;
+      padding: 3px 8px;
+      text-align: center;
+      min-width: 60px;
+    }
+
+    .stat-num { font-size: 14px; font-weight: bold; display: block; font-family: 'Courier New', monospace; }
+    .stat-lbl { font-size: 9px; text-transform: uppercase; color: #444444; display: block; }
+
+    /* Color preview */
+    .color-swatch {
+      width: 100%;
+      height: 48px;
+      border-top:    2px solid #808080;
+      border-left:   2px solid #808080;
+      border-bottom: 2px solid #DFDFDF;
+      border-right:  2px solid #DFDFDF;
+      margin-bottom: 6px;
+    }
+
+    input[type="color"] {
+      width: 32px;
+      height: 22px;
+      border-top:    1px solid #808080;
+      border-left:   1px solid #808080;
+      border-bottom: 1px solid #DFDFDF;
+      border-right:  1px solid #DFDFDF;
+      padding: 1px;
+      cursor: pointer;
+      background: #C0C0C0;
+    }
+
+    input[type="checkbox"] {
+      width: 13px;
+      height: 13px;
+      accent-color: #000080;
+      margin-right: 4px;
+    }
+
+    input[type="range"] {
+      accent-color: #000080;
+      width: 100%;
+    }
+
+    .check-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 3px;
+      font-size: 11px;
+    }
+
+    /* Error text */
+    .error-text { color: #800000; font-size: 11px; margin: 2px 0; }
+
+    /* Divider */
+    .win-hr {
+      border: none;
+      border-top: 1px solid #808080;
+      border-bottom: 1px solid #FFFFFF;
+      margin: 8px 0;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 16px; height: 16px; }
+    ::-webkit-scrollbar-track { background: #C0C0C0; }
+    ::-webkit-scrollbar-thumb {
+      background: #C0C0C0;
+      border-top:    1px solid #FFFFFF;
+      border-left:   1px solid #FFFFFF;
+      border-bottom: 1px solid #808080;
+      border-right:  1px solid #808080;
+    }
+    ::-webkit-scrollbar-button {
+      background: #C0C0C0;
+      border-top:    1px solid #FFFFFF;
+      border-left:   1px solid #FFFFFF;
+      border-bottom: 1px solid #808080;
+      border-right:  1px solid #808080;
+      display: block;
+      height: 16px;
+    }
+
+    /* ── Dropdown menus ───────────────────────────── */
+    .menu-container { position: relative; display: inline-block; }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #C0C0C0;
+      border-top:    1px solid #FFFFFF;
+      border-left:   1px solid #FFFFFF;
+      border-bottom: 1px solid #404040;
+      border-right:  1px solid #404040;
+      outline: 1px solid #000000;
+      min-width: 200px;
+      z-index: 8000;
+      padding: 2px 0;
+    }
+
+    .dropdown.open { display: block; }
+
+    .dropdown-item {
+      padding: 3px 32px 3px 22px;
+      cursor: pointer;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #000000;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .dropdown-item:hover { background: #000080; color: #FFFFFF; }
+
+    .dropdown-item.disabled {
+      color: #808080;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .dropdown-check { width: 16px; flex-shrink: 0; font-size: 10px; }
+    .dropdown-right  { margin-left: 24px; font-size: 10px; color: inherit; }
+
+    .dropdown-sep {
+      height: 1px;
+      background: #808080;
+      margin: 2px 3px;
+      border-bottom: 1px solid #FFFFFF;
+    }
+
+    .dropdown-heading {
+      padding: 2px 8px;
+      font-size: 10px;
+      font-weight: bold;
+      color: #808080;
+      cursor: default;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── About / modal dialog ──────────────────────── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 9998;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal-window {
+      background: #C0C0C0;
+      border-top:    2px solid #FFFFFF;
+      border-left:   2px solid #FFFFFF;
+      border-bottom: 2px solid #808080;
+      border-right:  2px solid #808080;
+      outline: 1px solid #000000;
+      width: 360px;
+    }
+
+    .modal-title {
+      background: #000080;
+      color: #FFFFFF;
+      padding: 3px 4px 3px 6px;
+      font-weight: bold;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+    }
+
+    .modal-body {
+      padding: 16px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .modal-icon { font-size: 40px; flex-shrink: 0; line-height: 1; }
+
+    .modal-text { font-size: 11px; line-height: 1.7; }
+    .modal-text b { font-size: 13px; display: block; margin-bottom: 4px; }
+
+    .modal-footer {
+      padding: 8px 12px 10px;
+      border-top: 1px solid #808080;
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* ── Shortcuts dialog ──────────────────────────── */
+    .shortcuts-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+    .shortcuts-table td { padding: 2px 6px; }
+    .shortcuts-table tr:nth-child(even) { background: #D4D0C8; }
+    .shortcuts-table .kbd {
+      font-family: 'Courier New', monospace;
+      background: #FFFFFF;
+      border-top:    1px solid #808080;
+      border-left:   1px solid #808080;
+      border-bottom: 1px solid #FFFFFF;
+      border-right:  1px solid #FFFFFF;
+      padding: 0 4px;
+      font-size: 10px;
+    }
+
+    /* Regex highlight */
+    mark.rx { background: #000080; color: #FFFFFF; }
+
+    /* Markdown preview output */
+    #mdPreview {
+      background: #FFFFFF;
+      border-top:    2px solid #808080;
+      border-left:   2px solid #808080;
+      border-bottom: 2px solid #DFDFDF;
+      border-right:  2px solid #DFDFDF;
+      padding: 6px;
+      min-height: 200px;
+      overflow-y: auto;
+      font-size: 12px;
+      line-height: 1.5;
+      font-family: Times New Roman, serif;
+    }
+
+    #mdPreview h1,#mdPreview h2,#mdPreview h3 { font-family: Arial, sans-serif; margin: 4px 0; }
+    #mdPreview h1 { font-size: 16px; }
+    #mdPreview h2 { font-size: 14px; }
+    #mdPreview h3 { font-size: 12px; }
+    #mdPreview p { margin: 4px 0; }
+    #mdPreview ul { margin-left: 16px; }
+    #mdPreview code { font-family: 'Courier New', monospace; background: #E8E8E8; padding: 0 2px; }
+    #mdPreview blockquote { border-left: 3px solid #808080; margin-left: 8px; padding-left: 6px; color: #444; }
+    #mdPreview a { color: #000080; }
+
+    /* Taskbar */
+    .taskbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 28px;
+      background: #C0C0C0;
+      border-top: 2px solid #FFFFFF;
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
+      gap: 4px;
+      z-index: 9999;
+    }
+
+    .start-btn {
+      background: #C0C0C0;
+      border-top:    2px solid #FFFFFF;
+      border-left:   2px solid #FFFFFF;
+      border-bottom: 2px solid #808080;
+      border-right:  2px solid #808080;
+      padding: 2px 8px;
+      font-weight: bold;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-family: inherit;
+    }
+
+    .taskbar-sep { width: 1px; height: 18px; background: #808080; border-right: 1px solid #FFFFFF; margin: 0 4px; }
+
+    .taskbar-task {
+      background: #C0C0C0;
+      border-top:    1px solid #808080;
+      border-left:   1px solid #808080;
+      border-bottom: 1px solid #FFFFFF;
+      border-right:  1px solid #FFFFFF;
+      padding: 2px 10px;
+      font-size: 11px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .taskbar-clock {
+      margin-left: auto;
+      border-top:    1px solid #808080;
+      border-left:   1px solid #808080;
+      border-bottom: 1px solid #FFFFFF;
+      border-right:  1px solid #FFFFFF;
+      padding: 2px 8px;
+      font-size: 11px;
+      min-width: 50px;
+      text-align: center;
+    }
+
+    /* Unit sub-panels */
+    .unit-result-box {
+      background: #FFFFFF;
+      border-top:    2px solid #808080;
+      border-left:   2px solid #808080;
+      border-bottom: 2px solid #DFDFDF;
+      border-right:  2px solid #DFDFDF;
+      padding: 6px 8px;
+      font-size: 14px;
+      font-weight: bold;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      min-height: 36px;
+    }
+
+    .pct-section {
+      background: #C0C0C0;
+      border-top:    2px solid #FFFFFF;
+      border-left:   2px solid #FFFFFF;
+      border-bottom: 2px solid #808080;
+      border-right:  2px solid #808080;
+      padding: 6px 8px;
+      margin-bottom: 6px;
+    }
+
+    .pct-label { font-weight: bold; margin-bottom: 4px; font-size: 11px; }
+
+    /* ── Mobile / responsive ───────────────────────── */
+    @media (max-width: 760px) {
+      body { padding: 4px 0 34px; }
+
+      .app-window {
+        width: auto;
+        margin: 0 4px;
+      }
+
+      /* Window title can be long — keep it from pushing controls off */
+      .title-bar-left { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+      /* Toolbar: drop quick-launch buttons, let search fill the row */
+      .tb-quick { display: none; }
+      .tb-label { display: none; }
+      .tb-search { flex: 1; width: auto; min-width: 0; }
+
+      /* Stack the sidebar above the content instead of beside it */
+      .workspace { flex-direction: column; height: auto; }
+
+      .tree-sidebar {
+        width: auto;
+        margin: 4px;
+        max-height: 168px;
+      }
+
+      .content-panel {
+        margin: 0 4px 4px;
+        height: auto;
+        min-height: 60vh;
+      }
+
+      /* Stack two-column form rows */
+      .form-row { flex-direction: column; align-items: stretch !important; }
+      .form-row > div[style*="width:"] { width: auto !important; }
+
+      /* Markdown editor: stack source over preview with usable heights */
+      #view-markdown .form-row { height: auto !important; }
+      #view-markdown textarea { height: 180px !important; }
+      #view-markdown #mdPreview { min-height: 180px; }
+
+      /* Dropdown menus must not exceed the viewport */
+      .dropdown {
+        max-width: calc(100vw - 16px);
+        max-height: 70vh;
+        overflow-y: auto;
+      }
+
+      /* Modals fit small screens */
+      .modal-window { width: 340px !important; max-width: calc(100vw - 24px); }
+
+      /* Status bar wraps gracefully */
+      .status-bar { flex-wrap: wrap; }
+
+      /* Home icons a touch larger for easier tapping */
+      .cp-icon { width: 84px; }
+    }
+
+    @media (max-width: 420px) {
+      .menu-item { padding: 3px 6px; }
+      .cp-grid { justify-content: space-around; }
+      .cp-icon { width: 30%; }
+    }
+  
+    /* link-based nav (per-tool pages) */
+    a.dropdown-item, a.tb-btn, a.cp-icon { text-decoration: none; color: #000000; }
+    a.tb-btn { display: flex; align-items: center; justify-content: center; }

@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free JSON Formatter &amp; Validator | HandyTools</title>
+  <meta name="description" content="Free online JSON formatter and validator. Paste JSON to beautify, indent, minify and validate it instantly in your browser. No signup." />
+  <meta name="keywords" content="json formatter, json validator, json beautifier, json minifier, format json online, pretty print json" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <meta name="theme-color" content="#000080" />
+  <link rel="canonical" href="https://handytools.dev/json-formatter" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="JSON Formatter — Free Online Tool | HandyTools" />
+  <meta property="og:description" content="Free online JSON formatter and validator. Paste JSON to beautify, indent, minify and validate it instantly in your browser. No signup." />
+  <meta property="og:url" content="https://handytools.dev/json-formatter" />
+  <meta property="og:site_name" content="HandyTools" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="JSON Formatter — HandyTools" />
+  <meta name="twitter:description" content="Free online JSON formatter and validator. Paste JSON to beautify, indent, minify and validate it instantly in your browser. No signup." />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/favicon.svg" />
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "JSON Formatter \u2014 HandyTools", "url": "https://handytools.dev/json-formatter", "applicationCategory": "DeveloperApplication", "operatingSystem": "Web", "description": "Free online JSON formatter and validator. Paste JSON to beautify, indent, minify and validate it instantly in your browser. No signup.", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "isPartOf": {"@type": "WebSite", "name": "HandyTools", "url": "https://handytools.dev/"}}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://handytools.dev/"}, {"@type": "ListItem", "position": 2, "name": "JSON Formatter", "item": "https://handytools.dev/json-formatter"}]}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I format JSON online?", "acceptedAnswer": {"@type": "Answer", "text": "Paste your JSON into the input box and click Format. HandyTools indents it with proper spacing and validates the syntax \u2014 all in your browser."}}, {"@type": "Question", "name": "Is it safe to paste sensitive JSON?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. All formatting happens locally in your browser; nothing is uploaded to any server."}}, {"@type": "Question", "name": "What is the difference between Format and Minify?", "acceptedAnswer": {"@type": "Answer", "text": "Format adds indentation and line breaks for readability, while Minify strips all whitespace to produce the smallest valid JSON."}}]}</script>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+<div class="app-window" role="main">
+
+  <!-- Title bar -->
+  <div class="title-bar">
+    <div class="title-bar-left">
+      <span class="title-icon">⚙</span>
+      <span id="windowTitle">HandyTools</span>
+    </div>
+    <div class="title-controls">
+      <button class="wnd-btn" title="Minimize" aria-label="Minimize">_</button>
+      <button class="wnd-btn" title="Maximize" aria-label="Maximize">□</button>
+      <button class="wnd-btn" title="Close" aria-label="Close" onclick="location.href='/'">✕</button>
+    </div>
+  </div>
+
+  <!-- Menu bar -->
+  <div class="menu-bar" role="menubar">
+
+    <!-- File -->
+    <div class="menu-container">
+      <span class="menu-item" onclick="toggleMenu('file')" role="menuitem" id="mi-file"><u>F</u>ile</span>
+      <div class="dropdown" id="menu-file">
+        <a class="dropdown-item" href="/"><span class="dropdown-check"></span>Home</a>
+        <div class="dropdown-sep"></div>
+        <div class="dropdown-item" onclick="window.print();closeMenus()"><span class="dropdown-check"></span>Print...<span class="dropdown-right">Ctrl+P</span></div>
+        <div class="dropdown-sep"></div>
+        <div class="dropdown-item" onclick="closeMenus()"><span class="dropdown-check"></span>Exit</div>
+      </div>
+    </div>
+
+    <!-- View -->
+    <div class="menu-container">
+      <span class="menu-item" onclick="toggleMenu('view')" role="menuitem" id="mi-view"><u>V</u>iew</span>
+      <div class="dropdown" id="menu-view">
+        <div class="dropdown-heading">Home Layout</div>
+        <div class="dropdown-item" onclick="setView('icons')"><span class="dropdown-check" id="check-icons">✓</span>Large Icons</div>
+        <div class="dropdown-item" onclick="setView('list')"><span class="dropdown-check" id="check-list"></span>List</div>
+        <div class="dropdown-sep"></div>
+        <div class="dropdown-item" onclick="toggleToolbar()"><span class="dropdown-check" id="check-toolbar">✓</span>Toolbar</div>
+        <div class="dropdown-item" onclick="toggleStatusBar()"><span class="dropdown-check" id="check-status">✓</span>Status Bar</div>
+        <div class="dropdown-sep"></div>
+        <div class="dropdown-item" onclick="location.reload();closeMenus()"><span class="dropdown-check"></span>Refresh<span class="dropdown-right">F5</span></div>
+      </div>
+    </div>
+
+    <!-- Tools -->
+    <div class="menu-container">
+      <span class="menu-item" onclick="toggleMenu('tools')" role="menuitem" id="mi-tools"><u>T</u>ools</span>
+      <div class="dropdown" id="menu-tools">
+        <div class="dropdown-heading">Developer</div>
+        <a class="dropdown-item" href="/json-formatter"><span class="dropdown-check"></span>{ } JSON Formatter</a>
+        <div class="dropdown-item" onclick="openTool('base64');closeMenus()"><span class="dropdown-check"></span>🔤 Base64 Encoder</div>
+        <a class="dropdown-item" href="/url-encoder"><span class="dropdown-check"></span>🔗 URL Encoder</a>
+        <a class="dropdown-item" href="/regex-tester"><span class="dropdown-check"></span>.* Regex Tester</a>
+        <a class="dropdown-item" href="/uuid-generator"><span class="dropdown-check"></span>🪪 UUID Generator</a>
+        <a class="dropdown-item" href="/markdown-preview"><span class="dropdown-check"></span>📝 Markdown Preview</a>
+        <div class="dropdown-sep"></div>
+        <div class="dropdown-heading">Text</div>
+        <a class="dropdown-item" href="/word-counter"><span class="dropdown-check"></span>📊 Word Counter</a>
+        <a class="dropdown-item" href="/case-converter"><span class="dropdown-check"></span>Aa Case Converter</a>
+        <a class="dropdown-item" href="/lorem-ipsum-generator"><span class="dropdown-check"></span>📄 Lorem Ipsum</a>
+        <div class="dropdown-sep"></div>
+        <div class="dropdown-heading">Generators</div>
+        <a class="dropdown-item" href="/password-generator"><span class="dropdown-check"></span>🔐 Password Generator</a>
+        <a class="dropdown-item" href="/color-converter"><span class="dropdown-check"></span>🎨 Color Converter</a>
+        <div class="dropdown-sep"></div>
+        <div class="dropdown-heading">Math &amp; Dates</div>
+        <a class="dropdown-item" href="/unit-converter"><span class="dropdown-check"></span>📏 Unit Converter</a>
+        <a class="dropdown-item" href="/percentage-calculator"><span class="dropdown-check"></span>% Percentage Calc</a>
+        <a class="dropdown-item" href="/age-calculator"><span class="dropdown-check"></span>📅 Age Calculator</a>
+        <a class="dropdown-item" href="/timestamp-converter"><span class="dropdown-check"></span>⏱ Timestamp</a>
+      </div>
+    </div>
+
+    <!-- Help -->
+    <div class="menu-container">
+      <span class="menu-item" onclick="toggleMenu('help')" role="menuitem" id="mi-help"><u>H</u>elp</span>
+      <div class="dropdown" id="menu-help">
+        <div class="dropdown-item" onclick="showShortcuts();closeMenus()"><span class="dropdown-check"></span>Keyboard Shortcuts...</div>
+        <div class="dropdown-sep"></div>
+        <div class="dropdown-item" onclick="showAbout();closeMenus()"><span class="dropdown-check"></span>About HandyTools</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <a class="tb-btn" href="/" title="Home">🏠 Home</a>
+    <div class="tb-sep tb-quick"></div>
+    <button class="tb-btn tb-quick" onclick="location.href='/json-formatter'" title="JSON Formatter">{ }</button>
+    <button class="tb-btn tb-quick" onclick="location.href='/password-generator'" title="Password Generator">🔐</button>
+    <button class="tb-btn tb-quick" onclick="location.href='/unit-converter'" title="Unit Converter">📏</button>
+    <button class="tb-btn tb-quick" onclick="location.href='/color-converter'" title="Color Converter">🎨</button>
+    <div class="tb-sep tb-quick"></div>
+    <span class="tb-label">Search:</span>
+    <input type="text" class="tb-search" id="globalSearch" placeholder="Find a tool..." oninput="filterTools(this.value)" aria-label="Search tools" />
+  </div>
+
+  <!-- Workspace -->
+  <div class="workspace">
+
+    <!-- Tree sidebar -->
+    <nav class="tree-sidebar" aria-label="Tool list">
+      <div class="tree-cat" onclick="toggleCat('cat-dev')">
+        <span class="arrow" id="arr-cat-dev">▼</span> Developer
+      </div>
+      <div class="tree-items" id="cat-dev">
+        <a class="tree-item" id="nav-json"      href="/json-formatter">{ } JSON Formatter</a>
+        <a class="tree-item" id="nav-base64"    href="/base64-encoder">🔤 Base64</a>
+        <a class="tree-item" id="nav-url"       href="/url-encoder">🔗 URL Encoder</a>
+        <a class="tree-item" id="nav-regex"     href="/regex-tester">.* Regex Tester</a>
+        <a class="tree-item" id="nav-uuid"      href="/uuid-generator">🪪 UUID Generator</a>
+        <a class="tree-item" id="nav-markdown"  href="/markdown-preview">📝 Markdown</a>
+      </div>
+
+      <div class="tree-cat" onclick="toggleCat('cat-text')">
+        <span class="arrow" id="arr-cat-text">▼</span> Text
+      </div>
+      <div class="tree-items" id="cat-text">
+        <a class="tree-item" id="nav-wordcount" href="/word-counter">📊 Word Counter</a>
+        <a class="tree-item" id="nav-case"      href="/case-converter">Aa Case Converter</a>
+        <a class="tree-item" id="nav-lorem"     href="/lorem-ipsum-generator">📄 Lorem Ipsum</a>
+      </div>
+
+      <div class="tree-cat" onclick="toggleCat('cat-gen')">
+        <span class="arrow" id="arr-cat-gen">▼</span> Generators
+      </div>
+      <div class="tree-items" id="cat-gen">
+        <a class="tree-item" id="nav-password"  href="/password-generator">🔐 Password Gen</a>
+        <a class="tree-item" id="nav-color"     href="/color-converter">🎨 Color Convert</a>
+      </div>
+
+      <div class="tree-cat" onclick="toggleCat('cat-math')">
+        <span class="arrow" id="arr-cat-math">▼</span> Math &amp; Dates
+      </div>
+      <div class="tree-items" id="cat-math">
+        <a class="tree-item" id="nav-unit"      href="/unit-converter">📏 Unit Converter</a>
+        <a class="tree-item" id="nav-percent"   href="/percentage-calculator">% Percentage</a>
+        <a class="tree-item" id="nav-age"       href="/age-calculator">📅 Age Calculator</a>
+        <a class="tree-item" id="nav-timestamp" href="/timestamp-converter">⏱ Timestamp</a>
+      </div>
+    </nav>
+
+    <!-- Content panel -->
+    <div class="content-panel">
+
+      <!-- ── HOME VIEW ──────────────────────────────────── -->
+      <div id="view-home">
+        <div id="toolGrid">
+          <!-- Injected by JS -->
+        </div>
+      </div>
+
+      <!-- ── JSON FORMATTER ────────────────────────────── -->
+      <section class="tool-panel" id="view-json" aria-labelledby="title-json">
+        <div class="dialog-title" id="title-json">{ } JSON Formatter &amp; Validator</div>
+        <div class="groupbox"><span class="groupbox-title">Input JSON</span>
+          <textarea id="jsonInput" rows="9" placeholder='{"key": "value", "arr": [1,2,3]}'></textarea>
+        </div>
+        <div class="btn-row">
+          <button class="btn default-btn" onclick="formatJSON()">Format</button>
+          <button class="btn" onclick="minifyJSON()">Minify</button>
+          <button class="btn" onclick="clearEl('jsonInput','jsonOutput','jsonError')">Clear</button>
+        </div>
+        <div id="jsonError" class="error-text"></div>
+        <div class="groupbox"><span class="groupbox-title">Output</span>
+          <div class="output-box" id="jsonOutput" style="min-height:90px;"><button class="copy-btn" onclick="copyEl('jsonOutput')">Copy</button></div>
+        </div>
+      </section>
+
+      <!-- ── BASE64 ─────────────────────────────────────── -->
+      <section class="tool-panel" id="view-base64" aria-labelledby="title-base64">
+        <div class="dialog-title" id="title-base64">🔤 Base64 Encoder / Decoder</div>
+        <div class="groupbox"><span class="groupbox-title">Input</span>
+          <textarea id="b64Input" rows="7" placeholder="Enter text to encode, or Base64 to decode..."></textarea>
+        </div>
+        <div class="btn-row">
+          <button class="btn default-btn" onclick="doBase64('encode')">Encode →</button>
+          <button class="btn" onclick="doBase64('decode')">← Decode</button>
+          <button class="btn" onclick="clearEl('b64Input','b64Output')">Clear</button>
+        </div>
+        <div class="groupbox"><span class="groupbox-title">Output</span>
+          <div class="output-box" id="b64Output" style="min-height:80px;"><button class="copy-btn" onclick="copyEl('b64Output')">Copy</button></div>
+        </div>
+      </section>
+
+      <!-- ── URL ENCODE ─────────────────────────────────── -->
+      <section class="tool-panel" id="view-url" aria-labelledby="title-url">
+        <div class="dialog-title" id="title-url">🔗 URL Encoder / Decoder</div>
+        <div class="groupbox"><span class="groupbox-title">Input</span>
+          <textarea id="urlInput" rows="7" placeholder="Enter a URL or encoded string..."></textarea>
+        </div>
+        <div class="btn-row">
+          <button class="btn default-btn" onclick="doURL('encode')">Encode →</button>
+          <button class="btn" onclick="doURL('decode')">← Decode</button>
+          <button class="btn" onclick="clearEl('urlInput','urlOutput')">Clear</button>
+        </div>
+        <div class="groupbox"><span class="groupbox-title">Output</span>
+          <div class="output-box" id="urlOutput" style="min-height:80px;"><button class="copy-btn" onclick="copyEl('urlOutput')">Copy</button></div>
+        </div>
+      </section>
+
+      <!-- ── REGEX TESTER ───────────────────────────────── -->
+      <section class="tool-panel" id="view-regex" aria-labelledby="title-regex">
+        <div class="dialog-title" id="title-regex">.* Regular Expression Tester</div>
+        <div class="groupbox"><span class="groupbox-title">Pattern</span>
+          <div class="form-row">
+            <div class="form-col">
+              <label class="field-label">Pattern:</label>
+              <input type="text" id="regexPattern" placeholder="e.g. \b\w+@\w+\.\w+\b" oninput="runRegex()" />
+            </div>
+            <div style="width:80px;">
+              <label class="field-label">Flags:</label>
+              <input type="text" id="regexFlags" value="g" oninput="runRegex()" />
+            </div>
+          </div>
+        </div>
+        <div class="groupbox"><span class="groupbox-title">Test String</span>
+          <textarea id="regexText" rows="5" oninput="runRegex()" placeholder="Enter text to test against..."></textarea>
+        </div>
+        <div id="regexInfo" style="font-size:11px;margin:3px 0;font-weight:bold;"></div>
+        <div class="groupbox"><span class="groupbox-title">Highlighted Matches</span>
+          <div class="output-box" id="regexHighlight" style="min-height:60px;"></div>
+        </div>
+      </section>
+
+      <!-- ── UUID ───────────────────────────────────────── -->
+      <section class="tool-panel" id="view-uuid" aria-labelledby="title-uuid">
+        <div class="dialog-title" id="title-uuid">🪪 UUID v4 Generator</div>
+        <div class="groupbox"><span class="groupbox-title">Options</span>
+          <div class="form-row" style="align-items:center;">
+            <label class="field-label" style="width:120px;">Number to generate:</label>
+            <input type="number" id="uuidCount" value="5" min="1" max="100" style="width:70px;" />
+            <button class="btn default-btn" onclick="genUUIDs()" style="margin-left:8px;">Generate</button>
+            <button class="btn" onclick="clearEl('','uuidOutput')" style="margin-left:4px;">Clear</button>
+          </div>
+        </div>
+        <div class="groupbox"><span class="groupbox-title">UUIDs</span>
+          <div class="output-box" id="uuidOutput" style="min-height:120px;"><button class="copy-btn" onclick="copyEl('uuidOutput')">Copy All</button></div>
+        </div>
+      </section>
+
+      <!-- ── MARKDOWN ───────────────────────────────────── -->
+      <section class="tool-panel" id="view-markdown" aria-labelledby="title-markdown">
+        <div class="dialog-title" id="title-markdown">📝 Markdown Previewer</div>
+        <div class="form-row" style="align-items:flex-start;height:340px;">
+          <div class="form-col" style="display:flex;flex-direction:column;height:100%;">
+            <label class="field-label">Markdown source:</label>
+            <textarea id="mdInput" oninput="renderMarkdown()" placeholder="# Hello World&#10;&#10;Write **markdown** here..." style="flex:1;resize:none;height:100%;"></textarea>
+          </div>
+          <div class="form-col" style="display:flex;flex-direction:column;height:100%;">
+            <label class="field-label">Preview:</label>
+            <div id="mdPreview" style="flex:1;overflow-y:auto;"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── WORD COUNTER ───────────────────────────────── -->
+      <section class="tool-panel" id="view-wordcount" aria-labelledby="title-wordcount">
+        <div class="dialog-title" id="title-wordcount">📊 Word Counter</div>
+        <div class="groupbox"><span class="groupbox-title">Text</span>
+          <textarea id="wcText" rows="12" oninput="countWords()" placeholder="Paste or type your text here..."></textarea>
+        </div>
+        <div class="groupbox"><span class="groupbox-title">Statistics</span>
+          <div class="stats-row">
+            <div class="stat-box"><span class="stat-num" id="wc-words">0</span><span class="stat-lbl">Words</span></div>
+            <div class="stat-box"><span class="stat-num" id="wc-chars">0</span><span class="stat-lbl">Characters</span></div>
+            <div class="stat-box"><span class="stat-num" id="wc-chars-ns">0</span><span class="stat-lbl">No spaces</span></div>
+            <div class="stat-box"><span class="stat-num" id="wc-lines">0</span><span class="stat-lbl">Lines</span></div>
+            <div class="stat-box"><span class="stat-num" id="wc-sentences">0</span><span class="stat-lbl">Sentences</span></div>
+            <div class="stat-box"><span class="stat-num" id="wc-read">0m</span><span class="stat-lbl">Read time</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── CASE CONVERTER ─────────────────────────────── -->
+      <section class="tool-panel" id="view-case" aria-labelledby="title-case">
+        <div class="dialog-title" id="title-case">Aa Text Case Converter</div>
+        <div class="groupbox"><span class="groupbox-title">Input</span>
+          <textarea id="caseInput" rows="5" placeholder="Enter text to convert..."></textarea>
+        </div>
+        <div class="groupbox"><span class="groupbox-title">Convert To</span>
+          <div class="btn-row">
+            <button class="btn" onclick="convertCase('upper')">UPPER CASE</button>
+            <button class="btn" onclick="convertCase('lower')">lower case</button>
+            <button class="btn" onclick="convertCase('title')">Title Case</button>
+            <button class="btn" onclick="convertCase('sentence')">Sentence case</button>
+            <button class="btn" onclick="convertCase('camel')">camelCase</button>
+            <button class="btn" onclick="convertCase('snake')">snake_case</button>
+            <button class="btn" onclick="convertCase('kebab')">kebab-case</button>
+            <button class="btn" onclick="convertCase('pascal')">PascalCase</button>
+          </div>
+        </div>
+        <div class="groupbox"><span class="groupbox-title">Output</span>
+          <div class="output-box" id="caseOutput" style="min-height:60px;"><button class="copy-btn" onclick="copyEl('caseOutput')">Copy</button></div>
+        </div>
+      </section>
+
+      <!-- ── LOREM IPSUM ────────────────────────────────── -->
+      <section class="tool-panel" id="view-lorem" aria-labelledby="title-lorem">
+        <div class="dialog-title" id="title-lorem">📄 Lorem Ipsum Generator</div>
+        <div class="groupbox"><span class="groupbox-title">Options</span>
+          <div class="form-row" style="align-items:center;">
+            <label class="field-label" style="width:80px;">Generate:</label>
+            <input type="number" id="loremCount" value="3" min="1" max="50" style="width:60px;" />
+            <select id="loremType" style="width:120px;margin-left:8px;">
+              <option value="paragraphs">Paragraphs</option>
+              <option value="sentences">Sentences</option>
+              <option value="words">Words</option>
+            </select>
+            <button class="btn default-btn" onclick="genLorem()" style="margin-left:8px;">Generate</button>
+          </div>
+        </div>
+        <div class="groupbox"><span class="groupbox-title">Output</span>
+          <div class="output-box" id="loremOutput" style="min-height:200px;font-family:'Times New Roman',serif;font-size:12px;color:#000;"><button class="copy-btn" onclick="copyEl('loremOutput')">Copy</button></div>
+        </div>
+      </section>
+
+      <!-- ── PASSWORD GEN ───────────────────────────────── -->
+      <section class="tool-panel" id="view-password" aria-labelledby="title-password">
+        <div class="dialog-title" id="title-password">🔐 Password Generator</div>
+        <div class="groupbox"><span class="groupbox-title">Options</span>
+          <div class="form-row" style="align-items:center;margin-bottom:4px;">
+            <label class="field-label" style="width:120px;">Length: <b id="passLenLabel">16</b></label>
+            <input type="range" id="passLen" min="4" max="128" value="16" oninput="document.getElementById('passLenLabel').textContent=this.value;genPassword()" style="flex:1;" />
+          </div>
+          <div class="check-row"><input type="checkbox" id="passUpper" checked onchange="genPassword()" /><label>Uppercase (A–Z)</label></div>
+          <div class="check-row"><input type="checkbox" id="passLower" checked onchange="genPassword()" /><label>Lowercase (a–z)</label></div>
+          <div class="check-row"><input type="checkbox" id="passNumbers" checked onchange="genPassword()" /><label>Numbers (0–9)</label></div>
+          <div class="check-row"><input type="checkbox" id="passSymbols" onchange="genPassword()" /><label>Symbols (!@#$%^&amp;*)</label></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn default-btn" onclick="genPassword()">Generate 1</button>
+          <button class="btn" onclick="genPassword(5)">Generate 5</button>
+          <button class="btn" onclick="clearEl('','passOutput')">Clear</button>
+        </div>
+        <div class="groupbox"><span class="groupbox-title">Output</span>
+          <div class="output-box" id="passOutput" style="min-height:80px;font-size:12px;"><button class="copy-btn" onclick="copyEl('passOutput')">Copy</button></div>
+          <div id="passStrength" style="margin-top:4px;font-size:11px;font-weight:bold;"></div>
+        </div>
+      </section>
+
+      <!-- ── COLOR CONVERTER ───────────────────────────── -->
+      <section class="tool-panel" id="view-color" aria-labelledby="title-color">
+        <div class="dialog-title" id="title-color">🎨 Color Converter</div>
+        <div class="color-swatch" id="colorPreview"></div>
+        <div class="groupbox"><span class="groupbox-title">Color Input</span>
+          <div class="form-row" style="align-items:flex-end;">
+            <div style="width:50px;">
+              <label class="field-label">Pick:</label>
+              <input type="color" id="colorPicker" value="#6c63ff" oninput="colorFromPicker()" />
+            </div>
+            <div class="form-col">
+              <label class="field-label">HEX:</label>
+              <input type="text" id="hexInput" placeholder="#6c63ff" oninput="colorFromHex()" />
+            </div>
+            <div class="form-col">
+              <label class="field-label">RGB:</label>
+              <input type="text" id="rgbInput" placeholder="108, 99, 255" oninput="colorFromRGB()" />
+            </div>
+            <div class="form-col">
+              <label class="field-label">HSL:</label>
+              <input type="text" id="hslInput" readonly />
+            </div>
+          </div>
+        </div>
+        <div class="groupbox"><span class="groupbox-title">CSS Variables</span>
+          <div class="output-box" id="colorCSS" style="min-height:50px;"><button class="copy-btn" onclick="copyEl('colorCSS')">Copy</button></div>
+        </div>
+      </section>
+
+      <!-- ── UNIT CONVERTER ─────────────────────────────── -->
+      <section class="tool-panel" id="view-unit" aria-labelledby="title-unit">
+        <div class="dialog-title" id="title-unit">📏 Unit Converter</div>
+        <div class="groupbox"><span class="groupbox-title">Category &amp; Values</span>
+          <div class="form-row" style="align-items:flex-end;">
+            <div style="width:140px;">
+              <label class="field-label">Category:</label>
+              <select id="unitCat" onchange="updateUnitOptions()">
+                <option value="length">Length</option>
+                <option value="weight">Weight / Mass</option>
+                <option value="temp">Temperature</option>
+                <option value="area">Area</option>
+                <option value="volume">Volume</option>
+                <option value="speed">Speed</option>
+                <option value="data">Digital Storage</option>
+              </select>
+            </div>
+            <div class="form-col">
+              <label class="field-label">Value:</label>
+              <input type="number" id="unitValue" value="1" oninput="convertUnit()" />
+            </div>
+            <div class="form-col">
+              <label class="field-label">From:</label>
+              <select id="unitFrom" onchange="convertUnit()"></select>
+            </div>
+            <div class="form-col">
+              <label class="field-label">To:</label>
+              <select id="unitTo" onchange="convertUnit()"></select>
+            </div>
+          </div>
+        </div>
+        <div class="groupbox"><span class="groupbox-title">Result</span>
+          <div class="unit-result-box" id="unitOutput">—</div>
+        </div>
+      </section>
+
+      <!-- ── PERCENTAGE ─────────────────────────────────── -->
+      <section class="tool-panel" id="view-percent" aria-labelledby="title-percent">
+        <div class="dialog-title" id="title-percent">% Percentage Calculator</div>
+
+        <div class="pct-section">
+          <div class="pct-label">What is X% of Y?</div>
+          <div class="form-row" style="align-items:flex-end;">
+            <div class="form-col"><label class="field-label">X (%):</label><input type="number" id="p1x" oninput="calcPercent1()" placeholder="25" /></div>
+            <div class="form-col"><label class="field-label">Y:</label><input type="number" id="p1y" oninput="calcPercent1()" placeholder="200" /></div>
+            <div class="form-col" style="flex:1.5;"><label class="field-label">Result:</label><div class="output-box" id="p1out" style="min-height:22px;padding:3px 4px;"></div></div>
+          </div>
+        </div>
+
+        <div class="pct-section">
+          <div class="pct-label">X is what % of Y?</div>
+          <div class="form-row" style="align-items:flex-end;">
+            <div class="form-col"><label class="field-label">X:</label><input type="number" id="p2x" oninput="calcPercent2()" placeholder="50" /></div>
+            <div class="form-col"><label class="field-label">Y:</label><input type="number" id="p2y" oninput="calcPercent2()" placeholder="200" /></div>
+            <div class="form-col" style="flex:1.5;"><label class="field-label">Result:</label><div class="output-box" id="p2out" style="min-height:22px;padding:3px 4px;"></div></div>
+          </div>
+        </div>
+
+        <div class="pct-section">
+          <div class="pct-label">Percentage change from X to Y:</div>
+          <div class="form-row" style="align-items:flex-end;">
+            <div class="form-col"><label class="field-label">From:</label><input type="number" id="p3x" oninput="calcPercent3()" placeholder="100" /></div>
+            <div class="form-col"><label class="field-label">To:</label><input type="number" id="p3y" oninput="calcPercent3()" placeholder="130" /></div>
+            <div class="form-col" style="flex:1.5;"><label class="field-label">Result:</label><div class="output-box" id="p3out" style="min-height:22px;padding:3px 4px;"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── AGE CALCULATOR ─────────────────────────────── -->
+      <section class="tool-panel" id="view-age" aria-labelledby="title-age">
+        <div class="dialog-title" id="title-age">📅 Age Calculator</div>
+        <div class="groupbox"><span class="groupbox-title">Dates</span>
+          <div class="form-row">
+            <div class="form-col">
+              <label class="field-label">Date of Birth:</label>
+              <input type="date" id="ageDob" onchange="calcAge()" />
+            </div>
+            <div class="form-col">
+              <label class="field-label">As of Date:</label>
+              <input type="date" id="ageRef" onchange="calcAge()" />
+            </div>
+          </div>
+        </div>
+        <div class="groupbox" id="ageResult" style="display:none;"><span class="groupbox-title">Result</span>
+          <div class="stats-row">
+            <div class="stat-box"><span class="stat-num" id="ageYears">0</span><span class="stat-lbl">Years</span></div>
+            <div class="stat-box"><span class="stat-num" id="ageMonths">0</span><span class="stat-lbl">Months</span></div>
+            <div class="stat-box"><span class="stat-num" id="ageDays">0</span><span class="stat-lbl">Days</span></div>
+            <div class="stat-box"><span class="stat-num" id="ageTotal">0</span><span class="stat-lbl">Total days</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── TIMESTAMP ──────────────────────────────────── -->
+      <section class="tool-panel" id="view-timestamp" aria-labelledby="title-timestamp">
+        <div class="dialog-title" id="title-timestamp">⏱ Unix Timestamp Converter</div>
+        <div class="groupbox"><span class="groupbox-title">Current Unix Time</span>
+          <div style="display:flex;gap:4px;align-items:center;">
+            <div class="output-box" id="nowTs" style="flex:1;font-size:14px;"></div>
+            <button class="btn" onclick="copyEl('nowTs')">Copy</button>
+          </div>
+        </div>
+        <hr class="win-hr" />
+        <div class="groupbox"><span class="groupbox-title">Unix Timestamp → Human Date</span>
+          <div class="form-row" style="align-items:flex-end;">
+            <div class="form-col">
+              <label class="field-label">Unix timestamp:</label>
+              <input type="number" id="tsUnix" placeholder="e.g. 1700000000" oninput="tsToHuman()" />
+            </div>
+            <div class="form-col" style="flex:1.5;">
+              <label class="field-label">Result:</label>
+              <div class="output-box" id="tsHumanOut" style="min-height:22px;padding:3px 4px;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="groupbox"><span class="groupbox-title">Human Date → Unix Timestamp</span>
+          <div class="form-row" style="align-items:flex-end;">
+            <div class="form-col">
+              <label class="field-label">Date/Time:</label>
+              <input type="text" id="tsHuman" placeholder="e.g. 2024-01-15 08:30:00" oninput="humanToTs()" />
+            </div>
+            <div class="form-col" style="flex:1.5;">
+              <label class="field-label">Result:</label>
+              <div class="output-box" id="tsUnixOut" style="min-height:22px;padding:3px 4px;"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /.content-panel -->
+  </div><!-- /.workspace -->
+
+  <!-- Status bar -->
+  <div class="status-bar">
+    <span class="status-cell" id="statusText">Ready</span>
+    <span class="status-cell">15 tools available</span>
+    <span class="status-cell" style="margin-left:auto;" id="statusDate"></span>
+  </div>
+
+</div><!-- /.app-window -->
+
+<!-- ── About dialog ── -->
+<div class="modal-overlay" id="aboutDialog" onclick="if(event.target===this)hideAbout()">
+  <div class="modal-window">
+    <div class="modal-title">
+      <span>⚙ About HandyTools</span>
+      <button class="wnd-btn" onclick="hideAbout()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-icon">⚙</div>
+      <div class="modal-text">
+        <b>HandyTools v1.0</b>
+        Free online developer &amp; productivity tools.<br><br>
+        15 tools — no signup, no tracking, no ads.<br><br>
+        JSON Formatter · Base64 · URL Encoder · Regex Tester · UUID Generator · Markdown Preview · Word Counter · Case Converter · Lorem Ipsum · Password Generator · Color Converter · Unit Converter · Percentage Calc · Age Calculator · Timestamp Converter<br><br>
+        Built with vanilla HTML, CSS &amp; JavaScript.<br>
+        All processing happens in your browser.
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn default-btn" onclick="hideAbout()">OK</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Keyboard Shortcuts dialog ── -->
+<div class="modal-overlay" id="shortcutsDialog" onclick="if(event.target===this)hideShortcuts()">
+  <div class="modal-window" style="width:400px;">
+    <div class="modal-title">
+      <span>⌨ Keyboard Shortcuts</span>
+      <button class="wnd-btn" onclick="hideShortcuts()">✕</button>
+    </div>
+    <div style="padding:10px 12px;">
+      <table class="shortcuts-table">
+        <tr><td><span class="kbd">Alt+F</span></td><td>File menu</td></tr>
+        <tr><td><span class="kbd">Alt+V</span></td><td>View menu</td></tr>
+        <tr><td><span class="kbd">Alt+T</span></td><td>Tools menu</td></tr>
+        <tr><td><span class="kbd">Alt+H</span></td><td>Help menu</td></tr>
+        <tr><td><span class="kbd">Escape</span></td><td>Close menu / dialog</td></tr>
+        <tr><td><span class="kbd">F5</span></td><td>Refresh</td></tr>
+        <tr><td><span class="kbd">Ctrl+P</span></td><td>Print</td></tr>
+        <tr><td><span class="kbd">Backspace</span></td><td>Go Home</td></tr>
+        <tr><td><span class="kbd">1</span> – <span class="kbd">9</span></td><td>Open tool by position</td></tr>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button class="btn default-btn" onclick="hideShortcuts()">OK</button>
+    </div>
+  </div>
+</div>
+
+<!-- Static crawlable content (visible to search engines, not intrusive) -->
+
+<section id="seo-content" aria-label="JSON Formatter description" style="width:820px;max-width:calc(100% - 16px);margin:12px auto 0;background:#C0C0C0;border-top:2px solid #fff;border-left:2px solid #fff;border-bottom:2px solid #808080;border-right:2px solid #808080;outline:1px solid #000;padding:12px 16px;font-family:'MS Sans Serif',Arial,sans-serif;font-size:11px;line-height:1.7;color:#000;">
+  <h1 style="font-size:15px;font-weight:bold;border-bottom:1px solid #808080;padding-bottom:4px;margin-bottom:8px;">JSON Formatter &amp; Validator — Free Online Tool</h1>
+  <p>Paste raw or minified JSON and instantly format it with clean indentation, or minify it to a single compact line. The formatter validates your JSON as it parses and shows a clear error message if the syntax is invalid — so it doubles as a JSON validator and linter.</p><p>Everything runs locally in your browser: your data is never uploaded to a server, making it safe for sensitive payloads. Common uses include debugging API responses, cleaning up config files, and pretty-printing JSON copied from logs.</p>
+  <h2 style="font-size:12px;font-weight:bold;margin:12px 0 4px;">Frequently asked questions</h2>
+  <p style="margin:6px 0;"><strong>How do I format JSON online?</strong><br>Paste your JSON into the input box and click Format. HandyTools indents it with proper spacing and validates the syntax — all in your browser.</p>
+  <p style="margin:6px 0;"><strong>Is it safe to paste sensitive JSON?</strong><br>Yes. All formatting happens locally in your browser; nothing is uploaded to any server.</p>
+  <p style="margin:6px 0;"><strong>What is the difference between Format and Minify?</strong><br>Format adds indentation and line breaks for readability, while Minify strips all whitespace to produce the smallest valid JSON.</p>
+  <p style="margin-top:8px;"><a href="/" style="color:#000080;">&larr; All 15 HandyTools</a></p>
+  <h2 style="font-size:12px;font-weight:bold;margin:10px 0 4px;">Other free tools</h2>
+  <p><a href="/base64-encoder" style="color:#000080;">Base64 Encoder</a> · <a href="/url-encoder" style="color:#000080;">URL Encoder</a> · <a href="/regex-tester" style="color:#000080;">Regex Tester</a> · <a href="/uuid-generator" style="color:#000080;">UUID Generator</a> · <a href="/markdown-preview" style="color:#000080;">Markdown Preview</a> · <a href="/word-counter" style="color:#000080;">Word Counter</a> · <a href="/case-converter" style="color:#000080;">Case Converter</a> · <a href="/lorem-ipsum-generator" style="color:#000080;">Lorem Ipsum</a> · <a href="/password-generator" style="color:#000080;">Password Generator</a> · <a href="/color-converter" style="color:#000080;">Color Converter</a> · <a href="/unit-converter" style="color:#000080;">Unit Converter</a> · <a href="/percentage-calculator" style="color:#000080;">Percentage Calculator</a> · <a href="/age-calculator" style="color:#000080;">Age Calculator</a> · <a href="/timestamp-converter" style="color:#000080;">Timestamp Converter</a></p>
+</section>
+<noscript>
+<div style="width:820px;margin:8px auto;padding:12px;background:#fff;border:1px solid #808080;font-family:Arial,sans-serif;font-size:12px;">
+  <h2>HandyTools — Free Online Developer Tools</h2>
+  <p>This site requires JavaScript. Please enable JavaScript to use the following free tools:</p>
+  <ul style="margin-left:20px;line-height:1.8;">
+    <li>JSON Formatter &amp; Validator</li>
+    <li>Base64 Encoder / Decoder</li>
+    <li>URL Encoder / Decoder</li>
+    <li>Regular Expression Tester</li>
+    <li>UUID v4 Generator</li>
+    <li>Markdown Previewer</li>
+    <li>Word Counter</li>
+    <li>Text Case Converter</li>
+    <li>Lorem Ipsum Generator</li>
+    <li>Password Generator</li>
+    <li>Color Converter (HEX / RGB / HSL)</li>
+    <li>Unit Converter (length, weight, temperature, area, volume, speed, storage)</li>
+    <li>Percentage Calculator</li>
+    <li>Age Calculator</li>
+    <li>Unix Timestamp Converter</li>
+  </ul>
+</div>
+</noscript>
+
+<!-- Taskbar -->
+<div class="taskbar">
+  <button class="start-btn">⊞ Start</button>
+  <div class="taskbar-sep"></div>
+  <button class="taskbar-task" onclick="location.href='/'">⚙ HandyTools</button>
+  <div class="taskbar-clock" id="taskbarClock"></div>
+</div>
+
+
+<script>window.PAGE_TOOL='json';</script>
+<script src="/app.js"></script>
+</body>
+</html>
