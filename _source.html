@@ -1013,6 +1013,24 @@
       .cp-grid { justify-content: space-around; }
       .cp-icon { width: 30%; }
     }
+
+    /* ── Product Hunt badge (Win95-framed) ─────────── */
+    .ph-badge {
+      float: right;
+      margin: 2px 0 10px 14px;
+      text-align: center;
+      background: #C0C0C0;
+      border-top: 2px solid #FFFFFF;
+      border-left: 2px solid #FFFFFF;
+      border-bottom: 2px solid #808080;
+      border-right: 2px solid #808080;
+      padding: 4px 4px 5px;
+    }
+    .ph-badge-label { font-size: 10px; font-weight: bold; margin-bottom: 3px; }
+    .ph-badge img { display: block; border: 1px solid #808080; }
+    @media (max-width: 760px) {
+      .ph-badge { float: none; margin: 0 auto 10px; display: table; }
+    }
   </style>
 </head>
 <body>
@@ -1583,6 +1601,12 @@
 
 <!-- Static crawlable content (visible to search engines, not intrusive) -->
 <section id="seo-content" aria-label="Tool descriptions" style="width:820px;max-width:calc(100% - 16px);margin:12px auto 0;background:#C0C0C0;border-top:2px solid #fff;border-left:2px solid #fff;border-bottom:2px solid #808080;border-right:2px solid #808080;outline:1px solid #000;padding:12px 16px;font-family:'MS Sans Serif',Arial,sans-serif;font-size:11px;line-height:1.7;color:#000;">
+  <div class="ph-badge">
+    <div class="ph-badge-label">★ Featured on Product Hunt</div>
+    <a href="https://www.producthunt.com/products/handytools?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-handytools" target="_blank" rel="noopener noreferrer">
+      <img alt="HandyTools - 15 free developer tools with a Windows 95 interface | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1189438&amp;theme=light&amp;t=1783347831693" />
+    </a>
+  </div>
   <h2 style="font-size:13px;font-weight:bold;border-bottom:1px solid #808080;padding-bottom:4px;margin-bottom:8px;">About HandyTools — Free Online Developer Tools</h2>
   <p>HandyTools is a free collection of 15 browser-based utilities for developers and everyday users. Every tool runs entirely in your browser — no account required, no data sent to any server, no ads.</p>
   <h3 style="font-size:12px;font-weight:bold;margin:8px 0 4px;">Developer Tools</h3>

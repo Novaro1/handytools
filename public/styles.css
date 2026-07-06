@@ -866,6 +866,24 @@
       .cp-grid { justify-content: space-around; }
       .cp-icon { width: 30%; }
     }
+
+    /* ── Product Hunt badge (Win95-framed) ─────────── */
+    .ph-badge {
+      float: right;
+      margin: 2px 0 10px 14px;
+      text-align: center;
+      background: #C0C0C0;
+      border-top: 2px solid #FFFFFF;
+      border-left: 2px solid #FFFFFF;
+      border-bottom: 2px solid #808080;
+      border-right: 2px solid #808080;
+      padding: 4px 4px 5px;
+    }
+    .ph-badge-label { font-size: 10px; font-weight: bold; margin-bottom: 3px; }
+    .ph-badge img { display: block; border: 1px solid #808080; }
+    @media (max-width: 760px) {
+      .ph-badge { float: none; margin: 0 auto 10px; display: table; }
+    }
   
     /* link-based nav (per-tool pages) */
     a.dropdown-item, a.tb-btn, a.cp-icon { text-decoration: none; color: #000000; }

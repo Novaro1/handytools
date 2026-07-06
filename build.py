@@ -293,7 +293,8 @@ def page(head_inner, content_html, page_tool=None):
 
 # ---- 4. index.html (hub) ----
 home_head = src[src.index("<head>")+6 : src.index("<style>")].rstrip()
-home_content = src[src.index('<section id="seo-content"') : src.index('</section>')+10]
+_seo_start = src.index('<section id="seo-content"')
+home_content = src[_seo_start : src.index('</section>', _seo_start)+10]
 with open("index.html","w",encoding="utf-8") as f:
     f.write(page(home_head, home_content))
 
