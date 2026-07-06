@@ -4,6 +4,8 @@
 
 🔗 **Live site: [handytools.dev](https://handytools.dev)**
 
+![HandyTools screenshot](docs/screenshot.png)
+
 Every tool runs entirely in your browser. Nothing is uploaded to a server, so it's safe for sensitive data.
 
 ---
