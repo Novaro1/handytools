@@ -83,6 +83,8 @@
         <a class="dropdown-item" href="/regex-tester"><span class="dropdown-check"></span>.* Regex Tester</a>
         <a class="dropdown-item" href="/uuid-generator"><span class="dropdown-check"></span>🪪 UUID Generator</a>
         <a class="dropdown-item" href="/markdown-preview"><span class="dropdown-check"></span>📝 Markdown Preview</a>
+        <a class="dropdown-item" href="/text-to-binary"><span class="dropdown-check"></span>01 Text ↔ Binary</a>
+        <a class="dropdown-item" href="/ip-subnet-calculator"><span class="dropdown-check"></span>🌐 IP Subnet Calculator</a>
         <div class="dropdown-sep"></div>
         <div class="dropdown-heading">Text</div>
         <a class="dropdown-item" href="/word-counter"><span class="dropdown-check"></span>📊 Word Counter</a>
@@ -141,6 +143,8 @@
         <a class="tree-item" id="nav-regex"     href="/regex-tester">.* Regex Tester</a>
         <a class="tree-item" id="nav-uuid"      href="/uuid-generator">🪪 UUID Generator</a>
         <a class="tree-item" id="nav-markdown"  href="/markdown-preview">📝 Markdown</a>
+        <a class="tree-item" id="nav-binary"    href="/text-to-binary">01 Text ⇄ Binary</a>
+        <a class="tree-item" id="nav-subnet"    href="/ip-subnet-calculator">🌐 Subnet Calc</a>
       </div>
 
       <div class="tree-cat" onclick="toggleCat('cat-text')">
@@ -528,13 +532,49 @@
         </div>
       </section>
 
+      <!-- ── TEXT ↔ BINARY ──────────────────────────────── -->
+      <section class="tool-panel" id="view-binary" aria-labelledby="title-binary">
+        <div class="dialog-title" id="title-binary">01 Text ↔ Binary Converter</div>
+        <div class="groupbox"><span class="groupbox-title">Input</span>
+          <textarea id="binInput" rows="6" placeholder="Enter text to convert to binary, or paste binary (space-separated 8-bit groups) to decode..."></textarea>
+        </div>
+        <div class="btn-row">
+          <button class="btn default-btn" onclick="doBinary('encode')">Text → Binary</button>
+          <button class="btn" onclick="doBinary('decode')">Binary → Text</button>
+          <button class="btn" onclick="clearEl('binInput','binOutput')">Clear</button>
+        </div>
+        <div class="groupbox"><span class="groupbox-title">Output</span>
+          <div class="output-box" id="binOutput" style="min-height:80px;"><button class="copy-btn" onclick="copyEl('binOutput')">Copy</button></div>
+        </div>
+      </section>
+
+      <!-- ── IP SUBNET CALCULATOR ────────────────────────── -->
+      <section class="tool-panel" id="view-subnet" aria-labelledby="title-subnet">
+        <div class="dialog-title" id="title-subnet">🌐 IP Subnet Calculator</div>
+        <div class="groupbox"><span class="groupbox-title">IPv4 Address &amp; Prefix</span>
+          <div class="form-row" style="align-items:flex-end;">
+            <div class="form-col">
+              <label class="field-label">IP address:</label>
+              <input type="text" id="subnetIp" value="192.168.1.10" oninput="calcSubnet()" placeholder="192.168.1.10" />
+            </div>
+            <div style="width:130px;">
+              <label class="field-label">CIDR prefix:</label>
+              <select id="subnetCidr" onchange="calcSubnet()"></select>
+            </div>
+          </div>
+        </div>
+        <div class="groupbox"><span class="groupbox-title">Results</span>
+          <div class="output-box" id="subnetOut" style="min-height:150px;font-size:12px;"><button class="copy-btn" onclick="copyEl('subnetOut')">Copy</button></div>
+        </div>
+      </section>
+
     </div><!-- /.content-panel -->
   </div><!-- /.workspace -->
 
   <!-- Status bar -->
   <div class="status-bar">
     <span class="status-cell" id="statusText">Ready</span>
-    <span class="status-cell">15 tools available</span>
+    <span class="status-cell">17 tools available</span>
     <span class="status-cell" style="margin-left:auto;" id="statusDate"></span>
   </div>
 
@@ -552,7 +592,7 @@
       <div class="modal-text">
         <b>HandyTools v1.0</b>
         Free online developer &amp; productivity tools.<br><br>
-        15 tools — no signup, no tracking, no ads.<br><br>
+        17 tools — no signup, no tracking, no ads.<br><br>
         JSON Formatter · Base64 · URL Encoder · Regex Tester · UUID Generator · Markdown Preview · Word Counter · Case Converter · Lorem Ipsum · Password Generator · Color Converter · Unit Converter · Percentage Calc · Age Calculator · Timestamp Converter<br><br>
         Built with vanilla HTML, CSS &amp; JavaScript.<br>
         All processing happens in your browser.
@@ -599,9 +639,9 @@
   <p style="margin:6px 0;"><strong>How do I decode a Base64 string?</strong><br>Paste the Base64 into the input and click Decode to get the original text back. Click Encode to convert the other way.</p>
   <p style="margin:6px 0;"><strong>Is Base64 the same as encryption?</strong><br>No. Base64 is encoding, not encryption — it is easily reversible and provides no security. Use it for transport, not secrecy.</p>
   <p style="margin:6px 0;"><strong>Does it handle Unicode and emoji?</strong><br>Yes. The encoder is UTF-8 safe, so accented characters and emoji encode and decode correctly.</p>
-  <p style="margin-top:8px;"><a href="/" style="color:#000080;">&larr; All 15 HandyTools</a></p>
+  <p style="margin-top:8px;"><a href="/" style="color:#000080;">&larr; All 17 HandyTools</a></p>
   <h2 style="font-size:12px;font-weight:bold;margin:10px 0 4px;">Other free tools</h2>
-  <p><a href="/json-formatter" style="color:#000080;">JSON Formatter</a> · <a href="/url-encoder" style="color:#000080;">URL Encoder</a> · <a href="/regex-tester" style="color:#000080;">Regex Tester</a> · <a href="/uuid-generator" style="color:#000080;">UUID Generator</a> · <a href="/markdown-preview" style="color:#000080;">Markdown Preview</a> · <a href="/word-counter" style="color:#000080;">Word Counter</a> · <a href="/case-converter" style="color:#000080;">Case Converter</a> · <a href="/lorem-ipsum-generator" style="color:#000080;">Lorem Ipsum</a> · <a href="/password-generator" style="color:#000080;">Password Generator</a> · <a href="/color-converter" style="color:#000080;">Color Converter</a> · <a href="/unit-converter" style="color:#000080;">Unit Converter</a> · <a href="/percentage-calculator" style="color:#000080;">Percentage Calculator</a> · <a href="/age-calculator" style="color:#000080;">Age Calculator</a> · <a href="/timestamp-converter" style="color:#000080;">Timestamp Converter</a></p>
+  <p><a href="/json-formatter" style="color:#000080;">JSON Formatter</a> · <a href="/url-encoder" style="color:#000080;">URL Encoder</a> · <a href="/regex-tester" style="color:#000080;">Regex Tester</a> · <a href="/uuid-generator" style="color:#000080;">UUID Generator</a> · <a href="/markdown-preview" style="color:#000080;">Markdown Preview</a> · <a href="/text-to-binary" style="color:#000080;">Text to Binary Converter</a> · <a href="/ip-subnet-calculator" style="color:#000080;">IP Subnet Calculator</a> · <a href="/word-counter" style="color:#000080;">Word Counter</a> · <a href="/case-converter" style="color:#000080;">Case Converter</a> · <a href="/lorem-ipsum-generator" style="color:#000080;">Lorem Ipsum</a> · <a href="/password-generator" style="color:#000080;">Password Generator</a> · <a href="/color-converter" style="color:#000080;">Color Converter</a> · <a href="/unit-converter" style="color:#000080;">Unit Converter</a> · <a href="/percentage-calculator" style="color:#000080;">Percentage Calculator</a> · <a href="/age-calculator" style="color:#000080;">Age Calculator</a> · <a href="/timestamp-converter" style="color:#000080;">Timestamp Converter</a></p>
 </section>
 <noscript>
 <div style="width:820px;margin:8px auto;padding:12px;background:#fff;border:1px solid #808080;font-family:Arial,sans-serif;font-size:12px;">

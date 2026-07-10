@@ -55,6 +55,20 @@ TOOLS = [
   "<p>Write Markdown on the left and watch the rendered result update live on the right. Supports headings, bold and italic text, inline code, blockquotes, bulleted lists, and links — the syntax used by GitHub, Reddit, Notion, and countless docs.</p>"
   "<p>It's a fast way to draft a README, format a comment, or check how your Markdown will look before publishing. Rendering happens entirely in your browser.</p>"),
 
+ ("binary","text-to-binary","Text to Binary Converter","Free Text to Binary Converter Online | HandyTools",
+  "Free online text to binary converter. Convert text to binary code and decode binary back to text instantly in your browser. No signup, no ads.",
+  "text to binary, binary converter, convert text to binary online, binary to text, binary translator, ascii to binary, text to binary code",
+  "Text to Binary Converter",
+  "<p>Convert any text into binary code, or paste binary and decode it straight back to text. HandyTools encodes your text as UTF-8 and shows each byte as an 8-bit binary group, so it handles plain ASCII, accented characters, and even emoji correctly.</p>"
+  "<p>Enter text and click Text → Binary for space-separated 8-bit binary, or paste binary groups and click Binary → Text to decode. Everything runs in your browser — nothing is uploaded to a server.</p>"),
+
+ ("subnet","ip-subnet-calculator","IP Subnet Calculator","Free IP Subnet Calculator Online (IPv4 / CIDR) | HandyTools",
+  "Free online IP subnet calculator. Enter an IPv4 address and CIDR prefix to get the network address, broadcast, usable host range, subnet mask and host count. No signup.",
+  "ip subnet calculator, subnet calculator online, ip subnetting calculator online, cidr calculator, subnet mask calculator, network calculator, ipv4 subnet",
+  "IP Subnet Calculator",
+  "<p>Enter an IPv4 address and a CIDR prefix (like /24) to instantly calculate the network address, broadcast address, usable host range, subnet mask, wildcard mask, and the number of usable and total addresses.</p>"
+  "<p>Ideal for network planning, configuring routers and firewalls, or studying for certifications. The calculation runs entirely in your browser — no data ever leaves your machine.</p>"),
+
  ("wordcount","word-counter","Word Counter","Free Word & Character Counter Online | HandyTools",
   "Free online word counter. Count words, characters, sentences, lines and reading time for any text instantly in your browser. No signup required.",
   "word counter, character counter, count words online, word count tool, reading time calculator",
@@ -152,6 +166,16 @@ FAQS = {
   ("What Markdown syntax is supported?","Headings, bold, italic, inline code, blockquotes, bulleted lists, and links."),
   ("Does the preview update live?","Yes. The rendered HTML updates in real time as you type."),
   ("Is my document saved or uploaded?","No. Everything stays in your browser."),
+ ],
+ "binary":[
+  ("How do I convert text to binary?","Type or paste your text and click Text → Binary. Each character is encoded as UTF-8 and shown as space-separated 8-bit binary groups."),
+  ("How do I convert binary back to text?","Paste space-separated 8-bit binary groups and click Binary → Text. The tool decodes them from UTF-8 back into readable characters."),
+  ("Does it support emoji and accented characters?","Yes. Text is encoded as UTF-8, so emoji, accents, and other Unicode characters convert correctly in both directions."),
+ ],
+ "subnet":[
+  ("What does an IP subnet calculator do?","It takes an IPv4 address and a CIDR prefix and works out the network address, broadcast address, usable host range, subnet mask, and how many hosts the subnet can hold."),
+  ("What is CIDR notation?","CIDR notation writes a network as an IP followed by a slash and prefix length, such as 192.168.1.0/24, where the number is how many bits belong to the network portion."),
+  ("How many hosts are in a /24 subnet?","A /24 subnet has 256 total addresses and 254 usable host addresses — the network and broadcast addresses are reserved."),
  ],
  "wordcount":[
   ("How is reading time calculated?","Based on an average reading speed of 200 words per minute, rounded up to the nearest minute."),
@@ -350,7 +374,7 @@ for i,(tid,slug,name,title,desc,kw,h1,intro) in enumerate(TOOLS):
      f'  <h1 style="font-size:15px;font-weight:bold;border-bottom:1px solid #808080;padding-bottom:4px;margin-bottom:8px;">{html.escape(h1)} — Free Online Tool</h1>\n'
      f'  {intro}\n'
      f'{faq_html}\n'
-     f'  <p style="margin-top:8px;"><a href="/" style="color:#000080;">&larr; All 15 HandyTools</a></p>\n'
+     f'  <p style="margin-top:8px;"><a href="/" style="color:#000080;">&larr; All {len(TOOLS)} HandyTools</a></p>\n'
      f'  <h2 style="font-size:12px;font-weight:bold;margin:10px 0 4px;">Other free tools</h2>\n'
      f'  <p>{others}</p>\n'
      f'</section>'

@@ -43,6 +43,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://handytools.dev/text-to-binary</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://handytools.dev/ip-subnet-calculator</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://handytools.dev/word-counter</loc>
     <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>

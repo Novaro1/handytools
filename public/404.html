@@ -69,6 +69,8 @@
         <a class="dropdown-item" href="/regex-tester"><span class="dropdown-check"></span>.* Regex Tester</a>
         <a class="dropdown-item" href="/uuid-generator"><span class="dropdown-check"></span>🪪 UUID Generator</a>
         <a class="dropdown-item" href="/markdown-preview"><span class="dropdown-check"></span>📝 Markdown Preview</a>
+        <a class="dropdown-item" href="/text-to-binary"><span class="dropdown-check"></span>01 Text ↔ Binary</a>
+        <a class="dropdown-item" href="/ip-subnet-calculator"><span class="dropdown-check"></span>🌐 IP Subnet Calculator</a>
         <div class="dropdown-sep"></div>
         <div class="dropdown-heading">Text</div>
         <a class="dropdown-item" href="/word-counter"><span class="dropdown-check"></span>📊 Word Counter</a>
@@ -127,6 +129,8 @@
         <a class="tree-item" id="nav-regex"     href="/regex-tester">.* Regex Tester</a>
         <a class="tree-item" id="nav-uuid"      href="/uuid-generator">🪪 UUID Generator</a>
         <a class="tree-item" id="nav-markdown"  href="/markdown-preview">📝 Markdown</a>
+        <a class="tree-item" id="nav-binary"    href="/text-to-binary">01 Text ⇄ Binary</a>
+        <a class="tree-item" id="nav-subnet"    href="/ip-subnet-calculator">🌐 Subnet Calc</a>
       </div>
 
       <div class="tree-cat" onclick="toggleCat('cat-text')">
@@ -514,13 +518,49 @@
         </div>
       </section>
 
+      <!-- ── TEXT ↔ BINARY ──────────────────────────────── -->
+      <section class="tool-panel" id="view-binary" aria-labelledby="title-binary">
+        <div class="dialog-title" id="title-binary">01 Text ↔ Binary Converter</div>
+        <div class="groupbox"><span class="groupbox-title">Input</span>
+          <textarea id="binInput" rows="6" placeholder="Enter text to convert to binary, or paste binary (space-separated 8-bit groups) to decode..."></textarea>
+        </div>
+        <div class="btn-row">
+          <button class="btn default-btn" onclick="doBinary('encode')">Text → Binary</button>
+          <button class="btn" onclick="doBinary('decode')">Binary → Text</button>
+          <button class="btn" onclick="clearEl('binInput','binOutput')">Clear</button>
+        </div>
+        <div class="groupbox"><span class="groupbox-title">Output</span>
+          <div class="output-box" id="binOutput" style="min-height:80px;"><button class="copy-btn" onclick="copyEl('binOutput')">Copy</button></div>
+        </div>
+      </section>
+
+      <!-- ── IP SUBNET CALCULATOR ────────────────────────── -->
+      <section class="tool-panel" id="view-subnet" aria-labelledby="title-subnet">
+        <div class="dialog-title" id="title-subnet">🌐 IP Subnet Calculator</div>
+        <div class="groupbox"><span class="groupbox-title">IPv4 Address &amp; Prefix</span>
+          <div class="form-row" style="align-items:flex-end;">
+            <div class="form-col">
+              <label class="field-label">IP address:</label>
+              <input type="text" id="subnetIp" value="192.168.1.10" oninput="calcSubnet()" placeholder="192.168.1.10" />
+            </div>
+            <div style="width:130px;">
+              <label class="field-label">CIDR prefix:</label>
+              <select id="subnetCidr" onchange="calcSubnet()"></select>
+            </div>
+          </div>
+        </div>
+        <div class="groupbox"><span class="groupbox-title">Results</span>
+          <div class="output-box" id="subnetOut" style="min-height:150px;font-size:12px;"><button class="copy-btn" onclick="copyEl('subnetOut')">Copy</button></div>
+        </div>
+      </section>
+
     </div><!-- /.content-panel -->
   </div><!-- /.workspace -->
 
   <!-- Status bar -->
   <div class="status-bar">
     <span class="status-cell" id="statusText">Ready</span>
-    <span class="status-cell">15 tools available</span>
+    <span class="status-cell">17 tools available</span>
     <span class="status-cell" style="margin-left:auto;" id="statusDate"></span>
   </div>
 
@@ -538,7 +578,7 @@
       <div class="modal-text">
         <b>HandyTools v1.0</b>
         Free online developer &amp; productivity tools.<br><br>
-        15 tools — no signup, no tracking, no ads.<br><br>
+        17 tools — no signup, no tracking, no ads.<br><br>
         JSON Formatter · Base64 · URL Encoder · Regex Tester · UUID Generator · Markdown Preview · Word Counter · Case Converter · Lorem Ipsum · Password Generator · Color Converter · Unit Converter · Percentage Calc · Age Calculator · Timestamp Converter<br><br>
         Built with vanilla HTML, CSS &amp; JavaScript.<br>
         All processing happens in your browser.

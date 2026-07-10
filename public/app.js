@@ -9,6 +9,8 @@ const TOOLS = [
   { id:'regex',     icon:'.*',  name:'Regex Tester',           cat:'Developer' },
   { id:'uuid',      icon:'UID', name:'UUID Generator',         cat:'Developer' },
   { id:'markdown',  icon:'MD',  name:'Markdown Preview',       cat:'Developer' },
+  { id:'binary',    icon:'01',  name:'Text to Binary',         cat:'Developer' },
+  { id:'subnet',    icon:'IP',  name:'IP Subnet Calc',         cat:'Developer' },
   { id:'wordcount', icon:'Wc',  name:'Word Counter',           cat:'Text'      },
   { id:'case',      icon:'Aa',  name:'Case Converter',         cat:'Text'      },
   { id:'lorem',     icon:'Lp',  name:'Lorem Ipsum',            cat:'Text'      },
@@ -20,11 +22,11 @@ const TOOLS = [
   { id:'timestamp', icon:'⏱',  name:'Timestamp',              cat:'Math & Dates'},
 ];
 
-const TOOL_SLUGS = {"json":"json-formatter","base64":"base64-encoder","url":"url-encoder","regex":"regex-tester","uuid":"uuid-generator","markdown":"markdown-preview","wordcount":"word-counter","case":"case-converter","lorem":"lorem-ipsum-generator","password":"password-generator","color":"color-converter","unit":"unit-converter","percent":"percentage-calculator","age":"age-calculator","timestamp":"timestamp-converter"};
+const TOOL_SLUGS = {"json":"json-formatter","base64":"base64-encoder","url":"url-encoder","regex":"regex-tester","uuid":"uuid-generator","markdown":"markdown-preview","binary":"text-to-binary","subnet":"ip-subnet-calculator","wordcount":"word-counter","case":"case-converter","lorem":"lorem-ipsum-generator","password":"password-generator","color":"color-converter","unit":"unit-converter","percent":"percentage-calculator","age":"age-calculator","timestamp":"timestamp-converter"};
 const TOOL_ICONS = {
   json:'{ }', base64:'🔤', url:'🔗', regex:'.*', uuid:'🪪', markdown:'📝',
   wordcount:'📊', case:'Aa', lorem:'📄', password:'🔐', color:'🎨',
-  unit:'📏', percent:'%', age:'📅', timestamp:'⏱'
+  unit:'📏', percent:'%', age:'📅', timestamp:'⏱', binary:'01', subnet:'🌐'
 };
 
 let openMenu = null;
@@ -538,6 +540,69 @@ function humanToTs() {
   document.getElementById('tsUnixOut').textContent = isNaN(d) ? '' : Math.floor(d.getTime()/1000);
 }
 
+/* ── Text ↔ Binary ── */
+function doBinary(mode) {
+  const inp = document.getElementById('binInput').value;
+  const out = document.getElementById('binOutput');
+  try {
+    let r;
+    if (mode === 'encode') {
+      const bytes = new TextEncoder().encode(inp);
+      r = Array.from(bytes).map(b => b.toString(2).padStart(8,'0')).join(' ');
+    } else {
+      const groups = inp.trim().split(/\s+/).filter(Boolean);
+      if (groups.some(g => !/^[01]{1,8}$/.test(g))) throw new Error('Input must be space-separated binary (0s and 1s)');
+      r = new TextDecoder().decode(Uint8Array.from(groups.map(g => parseInt(g, 2))));
+    }
+    out.innerHTML = '<button class="copy-btn" onclick="copyEl(\'binOutput\')">Copy</button>' + escHtml(r);
+  } catch(e) { out.textContent = 'ERROR: ' + e.message; }
+}
+
+/* ── IP Subnet Calculator ── */
+function fillSubnetCidr() {
+  const sel = document.getElementById('subnetCidr');
+  if (!sel) return;
+  sel.innerHTML = Array.from({length:33}, (_,i) => `<option value="${i}" ${i===24?'selected':''}>/${i}</option>`).join('');
+}
+function ipToInt(ip) {
+  const parts = ip.trim().split('.');
+  if (parts.length !== 4) return null;
+  let n = 0;
+  for (const p of parts) {
+    if (!/^\d{1,3}$/.test(p)) return null;
+    const v = parseInt(p, 10);
+    if (v > 255) return null;
+    n = (n * 256) + v;
+  }
+  return n >>> 0;
+}
+function intToIp(n) { return [(n>>>24)&255,(n>>>16)&255,(n>>>8)&255,n&255].join('.'); }
+function calcSubnet() {
+  const out = document.getElementById('subnetOut');
+  const btn = '<button class="copy-btn" onclick="copyEl(\'subnetOut\')">Copy</button>';
+  const ip = ipToInt(document.getElementById('subnetIp').value);
+  const cidr = parseInt(document.getElementById('subnetCidr').value, 10);
+  if (ip === null) { out.innerHTML = btn + 'Enter a valid IPv4 address (e.g. 192.168.1.10)'; return; }
+  const mask = cidr === 0 ? 0 : (0xFFFFFFFF << (32 - cidr)) >>> 0;
+  const wildcard = (~mask) >>> 0;
+  const network = (ip & mask) >>> 0;
+  const broadcast = (network | wildcard) >>> 0;
+  const total = Math.pow(2, 32 - cidr);
+  let firstHost, lastHost, usable;
+  if (cidr >= 31) { firstHost = network; lastHost = broadcast; usable = cidr === 32 ? 1 : 2; }
+  else { firstHost = (network + 1) >>> 0; lastHost = (broadcast - 1) >>> 0; usable = total - 2; }
+  const rows = [
+    ['Network address',  intToIp(network) + '/' + cidr],
+    ['Subnet mask',      intToIp(mask)],
+    ['Wildcard mask',    intToIp(wildcard)],
+    ['Broadcast address',intToIp(broadcast)],
+    ['Usable host range',intToIp(firstHost) + '  –  ' + intToIp(lastHost)],
+    ['Usable hosts',     usable.toLocaleString()],
+    ['Total addresses',  total.toLocaleString()],
+  ];
+  out.innerHTML = btn + escHtml(rows.map(r => r[0].padEnd(18) + r[1]).join('\n'));
+}
+
 /* ── Init ── */
 renderHome(TOOLS);
 genPassword();
@@ -545,5 +610,7 @@ colorFromPicker();
 updateUnitOptions();
 genUUIDs();
 genLorem();
+fillSubnetCidr();
+calcSubnet();
 
 if (window.PAGE_TOOL) { try { openTool(window.PAGE_TOOL); } catch(e){} }

@@ -4,8 +4,8 @@
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HandyTools — 15 Free Online Developer Tools | No Signup Required</title>
-  <meta name="description" content="15 free online developer tools: JSON formatter, password generator, unit converter, base64 encoder, regex tester, color converter & more. No signup, no ads." />
+  <title>HandyTools — 17 Free Online Developer Tools | No Signup Required</title>
+  <meta name="description" content="17 free online developer tools: JSON formatter, password generator, unit converter, base64 encoder, regex tester, color converter & more. No signup, no ads." />
   <meta name="keywords" content="online tools, developer tools, json formatter, password generator, unit converter, base64 encoder, color converter, word counter, uuid generator, url encoder, regex tester, markdown preview, lorem ipsum, age calculator, timestamp converter, free tools no signup" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="author" content="HandyTools" />
@@ -17,15 +17,15 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="HandyTools — 15 Free Online Developer Tools" />
-  <meta property="og:description" content="JSON formatter, password generator, unit converter, base64 encoder, color converter, regex tester and 9 more free tools. No signup, no ads, runs in your browser." />
+  <meta property="og:title" content="HandyTools — 17 Free Online Developer Tools" />
+  <meta property="og:description" content="JSON formatter, password generator, unit converter, base64 encoder, color converter, regex tester and 11 more free tools. No signup, no ads, runs in your browser." />
   <meta property="og:url" content="https://handytools.dev/" />
   <meta property="og:site_name" content="HandyTools" />
   <meta property="og:locale" content="en_US" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="HandyTools — 15 Free Online Developer Tools" />
+  <meta name="twitter:title" content="HandyTools — 17 Free Online Developer Tools" />
   <meta name="twitter:description" content="JSON formatter, password generator, unit converter, base64 encoder, regex tester and more. Free, no signup, runs in your browser." />
 
   <!-- Schema: WebSite with SearchAction -->
@@ -53,7 +53,7 @@
     "url": "https://handytools.dev/",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Web",
-    "description": "A collection of 15 free online developer and productivity tools including JSON formatter, password generator, unit converter, base64 encoder, color converter, word counter, UUID generator, URL encoder, regex tester, markdown preview, lorem ipsum generator, case converter, age calculator, percentage calculator, and Unix timestamp converter.",
+    "description": "A collection of 17 free online developer and productivity tools including JSON formatter, password generator, unit converter, base64 encoder, color converter, word counter, UUID generator, URL encoder, regex tester, markdown preview, lorem ipsum generator, case converter, age calculator, percentage calculator, Unix timestamp converter, text-to-binary converter, and IP subnet calculator.",
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -85,7 +85,7 @@
     "@context": "https://schema.org",
     "@type": "ItemList",
     "name": "Free Online Developer Tools",
-    "description": "15 free browser-based tools for developers and productivity",
+    "description": "17 free browser-based tools for developers and productivity",
     "itemListElement": [
       {"@type":"ListItem","position":1,"name":"JSON Formatter","description":"Format, validate and minify JSON data"},
       {"@type":"ListItem","position":2,"name":"Base64 Encoder/Decoder","description":"Encode or decode Base64 strings online"},
@@ -101,7 +101,9 @@
       {"@type":"ListItem","position":12,"name":"Unit Converter","description":"Convert length, weight, temperature, area, volume, speed and digital storage"},
       {"@type":"ListItem","position":13,"name":"Percentage Calculator","description":"Calculate percentages, percentage of a number, and percentage change"},
       {"@type":"ListItem","position":14,"name":"Age Calculator","description":"Calculate exact age in years, months and days from a date of birth"},
-      {"@type":"ListItem","position":15,"name":"Timestamp Converter","description":"Convert Unix timestamps to human-readable dates and back"}
+      {"@type":"ListItem","position":15,"name":"Timestamp Converter","description":"Convert Unix timestamps to human-readable dates and back"},
+      {"@type":"ListItem","position":16,"name":"Text to Binary Converter","description":"Convert text to binary and binary back to text"},
+      {"@type":"ListItem","position":17,"name":"IP Subnet Calculator","description":"Calculate network, broadcast, host range and mask from an IP and CIDR"}
     ]
   }
   </script>
@@ -135,7 +137,7 @@
       {
         "@type": "Question",
         "name": "Is HandyTools free to use?",
-        "acceptedAnswer": {"@type":"Answer","text":"Yes, HandyTools is completely free. All 15 tools run entirely in your browser — no account, no signup, no data sent to any server, and no ads."}
+        "acceptedAnswer": {"@type":"Answer","text":"Yes, HandyTools is completely free. All 17 tools run entirely in your browser — no account, no signup, no data sent to any server, and no ads."}
       },
       {
         "@type": "Question",
@@ -205,6 +207,8 @@
         <a class="dropdown-item" href="/regex-tester"><span class="dropdown-check"></span>.* Regex Tester</a>
         <a class="dropdown-item" href="/uuid-generator"><span class="dropdown-check"></span>🪪 UUID Generator</a>
         <a class="dropdown-item" href="/markdown-preview"><span class="dropdown-check"></span>📝 Markdown Preview</a>
+        <a class="dropdown-item" href="/text-to-binary"><span class="dropdown-check"></span>01 Text ↔ Binary</a>
+        <a class="dropdown-item" href="/ip-subnet-calculator"><span class="dropdown-check"></span>🌐 IP Subnet Calculator</a>
         <div class="dropdown-sep"></div>
         <div class="dropdown-heading">Text</div>
         <a class="dropdown-item" href="/word-counter"><span class="dropdown-check"></span>📊 Word Counter</a>
@@ -263,6 +267,8 @@
         <a class="tree-item" id="nav-regex"     href="/regex-tester">.* Regex Tester</a>
         <a class="tree-item" id="nav-uuid"      href="/uuid-generator">🪪 UUID Generator</a>
         <a class="tree-item" id="nav-markdown"  href="/markdown-preview">📝 Markdown</a>
+        <a class="tree-item" id="nav-binary"    href="/text-to-binary">01 Text ⇄ Binary</a>
+        <a class="tree-item" id="nav-subnet"    href="/ip-subnet-calculator">🌐 Subnet Calc</a>
       </div>
 
       <div class="tree-cat" onclick="toggleCat('cat-text')">
@@ -650,13 +656,49 @@
         </div>
       </section>
 
+      <!-- ── TEXT ↔ BINARY ──────────────────────────────── -->
+      <section class="tool-panel" id="view-binary" aria-labelledby="title-binary">
+        <div class="dialog-title" id="title-binary">01 Text ↔ Binary Converter</div>
+        <div class="groupbox"><span class="groupbox-title">Input</span>
+          <textarea id="binInput" rows="6" placeholder="Enter text to convert to binary, or paste binary (space-separated 8-bit groups) to decode..."></textarea>
+        </div>
+        <div class="btn-row">
+          <button class="btn default-btn" onclick="doBinary('encode')">Text → Binary</button>
+          <button class="btn" onclick="doBinary('decode')">Binary → Text</button>
+          <button class="btn" onclick="clearEl('binInput','binOutput')">Clear</button>
+        </div>
+        <div class="groupbox"><span class="groupbox-title">Output</span>
+          <div class="output-box" id="binOutput" style="min-height:80px;"><button class="copy-btn" onclick="copyEl('binOutput')">Copy</button></div>
+        </div>
+      </section>
+
+      <!-- ── IP SUBNET CALCULATOR ────────────────────────── -->
+      <section class="tool-panel" id="view-subnet" aria-labelledby="title-subnet">
+        <div class="dialog-title" id="title-subnet">🌐 IP Subnet Calculator</div>
+        <div class="groupbox"><span class="groupbox-title">IPv4 Address &amp; Prefix</span>
+          <div class="form-row" style="align-items:flex-end;">
+            <div class="form-col">
+              <label class="field-label">IP address:</label>
+              <input type="text" id="subnetIp" value="192.168.1.10" oninput="calcSubnet()" placeholder="192.168.1.10" />
+            </div>
+            <div style="width:130px;">
+              <label class="field-label">CIDR prefix:</label>
+              <select id="subnetCidr" onchange="calcSubnet()"></select>
+            </div>
+          </div>
+        </div>
+        <div class="groupbox"><span class="groupbox-title">Results</span>
+          <div class="output-box" id="subnetOut" style="min-height:150px;font-size:12px;"><button class="copy-btn" onclick="copyEl('subnetOut')">Copy</button></div>
+        </div>
+      </section>
+
     </div><!-- /.content-panel -->
   </div><!-- /.workspace -->
 
   <!-- Status bar -->
   <div class="status-bar">
     <span class="status-cell" id="statusText">Ready</span>
-    <span class="status-cell">15 tools available</span>
+    <span class="status-cell">17 tools available</span>
     <span class="status-cell" style="margin-left:auto;" id="statusDate"></span>
   </div>
 
@@ -674,7 +716,7 @@
       <div class="modal-text">
         <b>HandyTools v1.0</b>
         Free online developer &amp; productivity tools.<br><br>
-        15 tools — no signup, no tracking, no ads.<br><br>
+        17 tools — no signup, no tracking, no ads.<br><br>
         JSON Formatter · Base64 · URL Encoder · Regex Tester · UUID Generator · Markdown Preview · Word Counter · Case Converter · Lorem Ipsum · Password Generator · Color Converter · Unit Converter · Percentage Calc · Age Calculator · Timestamp Converter<br><br>
         Built with vanilla HTML, CSS &amp; JavaScript.<br>
         All processing happens in your browser.
@@ -718,11 +760,11 @@
   <div class="ph-badge">
     <div class="ph-badge-label">★ Featured on Product Hunt</div>
     <a href="https://www.producthunt.com/products/handytools?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-handytools" target="_blank" rel="noopener noreferrer">
-      <img alt="HandyTools - 15 free developer tools with a Windows 95 interface | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1189438&amp;theme=light&amp;t=1783347831693" />
+      <img alt="HandyTools - 17 free developer tools with a Windows 95 interface | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1189438&amp;theme=light&amp;t=1783347831693" />
     </a>
   </div>
   <h2 style="font-size:13px;font-weight:bold;border-bottom:1px solid #808080;padding-bottom:4px;margin-bottom:8px;">About HandyTools — Free Online Developer Tools</h2>
-  <p>HandyTools is a free collection of 15 browser-based utilities for developers and everyday users. Every tool runs entirely in your browser — no account required, no data sent to any server, no ads.</p>
+  <p>HandyTools is a free collection of 17 browser-based utilities for developers and everyday users. Every tool runs entirely in your browser — no account required, no data sent to any server, no ads.</p>
   <h3 style="font-size:12px;font-weight:bold;margin:8px 0 4px;">Developer Tools</h3>
   <p><strong>JSON Formatter &amp; Validator</strong> — Paste raw or minified JSON to format it with indentation, or minify it to compact form. Validates syntax and reports parse errors.</p>
   <p><strong>Base64 Encoder / Decoder</strong> — Encode plain text or binary data to Base64, or decode Base64 strings back to plain text. Useful for JWTs, data URIs, and API payloads.</p>
